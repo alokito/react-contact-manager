@@ -1,25 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './styles.css';
+import ContactList from './ContactList';
+import ContactDetails from './ContactDetails';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <nav className="navbar navbar-light bg-light border-bottom fixed-top" role="navigation">
+      <a className="navbar-brand" href="/">
+        <i className="fa fa-user"></i>
+        <span>Contacts</span>
+      </a>
+    </nav>
+  
+    <div className="container-md">
+      <div className="row">
+        <ContactList></ContactList>
+        <ContactDetails></ContactDetails>
+      </div>
     </div>
+    </>
   );
 }
 

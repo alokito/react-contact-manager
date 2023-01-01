@@ -5,6 +5,16 @@ This is a React rewrite of https://github.com/alokito/aurelia-contact-manager to
 npx create-react-app react-contact-manager --template typescript
 ```
 
+## Some Observations along the way
+
+React does not include many of the things that are available "out of the box" in Aurelia. It is way more modular. This is both a strength and a weakness, since it forces you to make a lot of choices up front when all you want to do is write the app. I hadn't noticed this before, since I normally work in an environment where there are "sensible defaults".
+
+* You need to pick a router, fortunately there is a sensible default: https://reactrouter.com/en/6.6.1/web/example/basic
+* Adding bootstrap and fontawesome was nearly the same.
+* There are fewer kinds of things; instead of spitting things between router, object and view everything goes in a react component. Even the router is a react component.
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
