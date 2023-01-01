@@ -1,4 +1,5 @@
 import { FC } from "react"
+import { Contact } from "./types";
 
 interface NoSelectionProps {
     message: string;
@@ -11,11 +12,13 @@ const NoSelection: FC<NoSelectionProps> = ({message}) => (
 
 
 interface ContactDetailsProps {
-
+    contact: Contact | null;
 }
-const ContactDetails:FC<ContactDetailsProps> = () => {
-    const content  = <NoSelection message="Please Select a Contact."></NoSelection>;
-    return <div className="col-sm-7 col-md-8">{content}</div>;
+const ContactDetails:FC<ContactDetailsProps> = ({contact}) => {
+    if (contact === null) {
+        return <NoSelection message="Please Select a Contact."></NoSelection>;
+    }
+    return <NoSelection message={`You selected ${contact.firstName}`}></NoSelection>;
 }
 
 export default ContactDetails;

@@ -9,8 +9,20 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
+  LoaderFunctionArgs,
+  Params,
   RouterProvider,
 } from "react-router-dom";
+import { api } from './web-api';
+
+interface LoaderParams {
+  params: {
+    contactId: number
+  }
+}
+export async function loader({params} : LoaderFunctionArgs) {
+  return api.getContactDetails(parseInt(params.contactId!, 10));
+}
 
 const router = createBrowserRouter([
   {
@@ -19,7 +31,8 @@ const router = createBrowserRouter([
   },
   {
     path: "contacts/:contactId",
-    element: <div> Contacts go here</div>,
+    loader: loader,
+    element: <App/>,
   },
 ]);
 const root = ReactDOM.createRoot(

@@ -1,3 +1,5 @@
+import { Contact } from "./types";
+
 let latency = 200;
 let id = 0;
 
@@ -43,10 +45,11 @@ let contacts = [
   }
 ];
 
-export class WebAPI {
+class WebAPI {
   isRequesting = false;
   
-  getContactList(){
+  getContactList():Promise<Array<Contact>> {
+    console.log("getContactList called")
     this.isRequesting = true;
     return new Promise(resolve => {
       setTimeout(() => {
@@ -62,23 +65,25 @@ export class WebAPI {
     });
   }
 
-  getContactDetails(id){
+  getContactDetails(id: number): Promise<Contact>{
     this.isRequesting = true;
+    console.log("getContactDetails called")
     return new Promise(resolve => {
       setTimeout(() => {
-        let found = contacts.filter(x => x.id == id)[0];
+        let found = contacts.filter(x => x.id === id)[0];
         resolve(JSON.parse(JSON.stringify(found)));
         this.isRequesting = false;
       }, latency);
     });
   }
 
-  saveContact(contact){
+  saveContact(contact: Contact){
+    console.log("saveContact called")
     this.isRequesting = true;
     return new Promise(resolve => {
       setTimeout(() => {
         let instance = JSON.parse(JSON.stringify(contact));
-        let found = contacts.filter(x => x.id == contact.id)[0];
+        let found = contacts.filter(x => x.id === contact.id)[0];
 
         if(found){
           let index = contacts.indexOf(found);
@@ -94,3 +99,4 @@ export class WebAPI {
     });
   }
 }
+export const api = new WebAPI();
