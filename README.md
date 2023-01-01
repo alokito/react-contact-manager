@@ -1,3 +1,10 @@
+# Purpose 
+
+This is a React rewrite of https://github.com/alokito/aurelia-contact-manager to enable compare and contrast of different ways of doing things. Created with:
+```sh
+npx create-react-app react-contact-manager --template typescript
+```
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
