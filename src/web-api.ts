@@ -57,7 +57,8 @@ class WebAPI {
           id:x.id,
           firstName:x.firstName,
           lastName:x.lastName,
-          email:x.email
+          email:x.email,
+          phoneNumber: x.phoneNumber
         }});
         resolve(results);
         this.isRequesting = false;
