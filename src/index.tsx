@@ -20,9 +20,6 @@ interface LoaderParams {
     contactId: number
   }
 }
-export async function loader({params} : LoaderFunctionArgs) {
-  return api.getContactDetails(parseInt(params.contactId!, 10));
-}
 
 const router = createBrowserRouter([
   {
@@ -31,7 +28,6 @@ const router = createBrowserRouter([
   },
   {
     path: "contacts/:contactId",
-    loader: loader,
     element: <App/>,
   },
 ]);

@@ -4,13 +4,16 @@ import ContactList from './ContactList';
 import ContactDetails from './ContactDetails';
 import { api } from './web-api';
 import { Contact } from './types';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useParams } from 'react-router';
 
 function App() {
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [contacts, setContacts] = useState<Array<Contact>>([]);
-  const selectedContact = useLoaderData() as Contact|undefined;
+  
+  const [selectedContact, setSelectedContact] = useState<Contact|null>(null);
+  
+  const params = useParams() as {contactId?:string};  
 
   // Note: the empty deps array [] means
   // this useEffect will run once
@@ -24,7 +27,22 @@ function App() {
         }
       )
   }, []);
-  
+
+
+  useEffect(() => {
+    if (params.contactId) {
+      api.getContactDetails(parseInt(params.contactId!, 10))
+      .then(
+        (result) => {
+          setSelectedContact(result);
+        }
+      )
+    } else {
+      setSelectedContact(null);
+    }
+  }, [params.contactId]);  
+
+
   return (
     <>
     <nav className="navbar navbar-light bg-light border-bottom fixed-top" role="navigation">
