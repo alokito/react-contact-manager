@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { MouseEventHandler, useEffect, useState } from 'react';
 import './styles.css';
 import ContactList from './ContactList';
 import ContactDetails from './ContactDetails';
@@ -8,12 +8,23 @@ import { useLoaderData, useParams } from 'react-router';
 
 function App() {
 
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [contacts, setContacts] = useState<Array<Contact>>([]);
   
   const [selectedContact, setSelectedContact] = useState<Contact|null>(null);
   
-  const params = useParams() as {contactId?:string};  
+  const params = useParams() as {contactId?:string};
+
+  
+  const saveContact =(contact:Contact) => {
+    setIsLoading(true)
+    api.saveContact(contact).then(() => {
+      const newContacts = contacts.map(c => c.id == contact.id?contact:c)
+      setContacts(newContacts)
+      setIsLoading(false)
+    })
+  }
+
 
   // Note: the empty deps array [] means
   // this useEffect will run once
@@ -22,7 +33,7 @@ function App() {
     api.getContactList()
       .then(
         (result) => {
-          setIsLoaded(true);
+          setIsLoading(false);
           setContacts(result);
         }
       )
@@ -31,14 +42,17 @@ function App() {
 
   useEffect(() => {
     if (params.contactId) {
+      setIsLoading(true);
       api.getContactDetails(parseInt(params.contactId!, 10))
       .then(
         (result) => {
           setSelectedContact(result);
+          setIsLoading(false);
         }
       )
     } else {
       setSelectedContact(null);
+      setIsLoading(false);
     }
   }, [params.contactId]);  
 
@@ -55,7 +69,11 @@ function App() {
     <div className="container-md">
       <div className="row">
         <ContactList contacts={contacts} selectedId={selectedContact?selectedContact.id:null}></ContactList>
-        <ContactDetails contact={selectedContact?selectedContact:null}></ContactDetails>
+        <ContactDetails key={selectedContact?selectedContact.id:null} 
+          contact={selectedContact?selectedContact:null}
+          saveContact={saveContact}
+          isLoading={isLoading}
+        />
       </div>
     </div>
     </>
